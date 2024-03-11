@@ -18,6 +18,6 @@ A simple [lox](https://github.com/munificent/craftinginterpreters) language impl
 
   
 
-- add break and continue statement
+- add `break` and `continue` statement
 
-- rewrite for statement
+- rewrite `for` statement
