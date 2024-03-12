@@ -21,3 +21,7 @@ A simple [lox](https://github.com/munificent/craftinginterpreters) language impl
 - add `break` and `continue` statement
 
 - rewrite `for` statement
+
+- support C style comment like `/**/`
+
+- add modulo operation `%`
