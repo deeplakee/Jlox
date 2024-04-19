@@ -7,22 +7,29 @@ import java.util.List;
 
 public class NativeFun {
 
-    static class Clock implements LoxCallable{
+    static class Clock implements LoxCallable {
         @Override
-        public int arity() { return 0; }
+        public int arity() {
+            return 0;
+        }
 
         @Override
         public Object call(Interpreter interpreter, Object callee, List<Object> arguments) {
-        return (double)System.currentTimeMillis() / 1000.0;
-    }
+            return (double) System.currentTimeMillis() / 1000.0;
+        }
 
         @Override
-        public String toString() { return "<native fn>"; }
+        public String toString() {
+            return "<native fn>";
+        }
     }
 
-    static class Println implements LoxCallable{
+    static class Println implements LoxCallable {
         @Override
-        public int arity() { return 1; }
+        public int arity() {
+            return 1;
+        }
+
         @Override
         public Object call(Interpreter interpreter, Object callee, List<Object> arguments) {
             System.out.println(stringify(arguments.getFirst()));
@@ -30,12 +37,16 @@ public class NativeFun {
         }
 
         @Override
-        public String toString() { return "<native fn>"; }
+        public String toString() {
+            return "<native fn>";
+        }
     }
 
-    static class Get implements LoxCallable{
+    static class Get implements LoxCallable {
         @Override
-        public int arity() { return 0; }
+        public int arity() {
+            return 0;
+        }
 
         @Override
         public Object call(Interpreter interpreter, Object callee, List<Object> arguments) {
@@ -43,26 +54,32 @@ public class NativeFun {
             try {
                 return br.readLine();
             } catch (IOException e) {
-                throw new RuntimeError(((Expr.Variable) callee).name,"IOException");
+                throw new RuntimeError(((Expr.Variable) callee).name, "IOException");
             }
         }
 
         @Override
-        public String toString() { return "<native fn>"; }
+        public String toString() {
+            return "<native fn>";
+        }
     }
 
-    static class Exit implements LoxCallable{
+    static class Exit implements LoxCallable {
         @Override
-        public int arity() { return 0; }
+        public int arity() {
+            return 0;
+        }
 
         @Override
         public Object call(Interpreter interpreter, Object callee, List<Object> arguments) {
-        System.exit(64);
-        return null;
-    }
+            System.exit(64);
+            return null;
+        }
 
         @Override
-        public String toString() { return "<native fn>"; }
+        public String toString() {
+            return "<native fn>";
+        }
     }
 
 

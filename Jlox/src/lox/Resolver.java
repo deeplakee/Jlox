@@ -9,18 +9,21 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
     private final Interpreter interpreter;
     private final Stack<Map<String, Boolean>> scopes = new Stack<>();
     private FunctionType currentFunction = FunctionType.NONE;
-    private  LoopType currentLoop = LoopType.NONE;
+    private LoopType currentLoop = LoopType.NONE;
     private ClassType currentClass = ClassType.NONE;
+
     private enum FunctionType {
         NONE,
         FUNCTION,
         INITIALIZER,
         METHOD
     }
-    private enum LoopType{
+
+    private enum LoopType {
         NONE,
         LOOP
     }
+
     private enum ClassType {
         NONE,
         CLASS,
@@ -60,7 +63,7 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
         beginScope();
         scopes.peek().put("this", true);
         for (Stmt.Function method : stmt.methods) {
-            FunctionType declaration=FunctionType.METHOD;
+            FunctionType declaration = FunctionType.METHOD;
             if (method.name.lexeme.equals("init")) {
                 declaration = FunctionType.INITIALIZER;
             }
@@ -299,6 +302,7 @@ class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
             resolve(statement);
         }
     }
+
     private void resolve(Stmt stmt) {
         stmt.accept(this);
     }

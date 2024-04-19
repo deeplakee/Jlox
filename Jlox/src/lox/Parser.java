@@ -1,12 +1,17 @@
 package lox;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import static lox.TokenType.*;
 
 class Parser {
     private final List<Token> tokens;
-    private static class ParseError extends RuntimeException {}
+
+    private static class ParseError extends RuntimeException {
+    }
+
     private int current = 0;
 
     Parser(List<Token> tokens) {
@@ -133,7 +138,7 @@ class Parser {
     private Stmt forStatement() {
         consume(LEFT_PAREN, "Expect '(' after 'for'.");
 
-        Stmt initializer=null;
+        Stmt initializer = null;
         if (!match(SEMICOLON)) {
             initializer = declaration();
         }
@@ -164,7 +169,6 @@ class Parser {
         consume(SEMICOLON, "Expect ';' after 'continue'.");
         return new Stmt.Continue(keyword);
     }
-
 
 
     //returnStmt     → "return" expression? ";"
@@ -212,10 +216,10 @@ class Parser {
             Expr value = assignment();
 
             if (expr instanceof Expr.Variable) {
-                Token name = ((Expr.Variable)expr).name;
+                Token name = ((Expr.Variable) expr).name;
                 return new Expr.Assign(name, value);
             } else if (expr instanceof Expr.Get) {
-                Expr.Get get = (Expr.Get)expr;
+                Expr.Get get = (Expr.Get) expr;
                 return new Expr.Set(get.object, get.name, value);
             }
 
@@ -278,7 +282,7 @@ class Parser {
         return expr;
     }
 
-//term           → factor ( ( "-" | "+" ) factor )*
+    //term           → factor ( ( "-" | "+" ) factor )*
     private Expr term() {
         Expr expr = factor();
 
@@ -304,7 +308,7 @@ class Parser {
         return expr;
     }
 
-//unary            → ( "!" | "-" ) unary | call
+    //unary            → ( "!" | "-" ) unary | call
     private Expr unary() {
         if (match(BANG, MINUS)) {
             Token operator = previous();

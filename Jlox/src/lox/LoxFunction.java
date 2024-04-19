@@ -20,7 +20,7 @@ class LoxFunction implements LoxCallable {
     }
 
     @Override
-    public Object call(Interpreter interpreter,Object callee, List<Object> arguments) {
+    public Object call(Interpreter interpreter, Object callee, List<Object> arguments) {
         Environment environment = new Environment(closure);
         for (int i = 0; i < declaration.params.size(); i++) {
             environment.define(declaration.params.get(i).lexeme, arguments.get(i));

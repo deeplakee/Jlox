@@ -5,6 +5,7 @@ import java.util.Map;
 
 class Environment {
     final Environment enclosing;
+
     Environment() {
         enclosing = null;
     }
@@ -12,6 +13,7 @@ class Environment {
     Environment(Environment enclosing) {
         this.enclosing = enclosing;
     }
+
     private final Map<String, Object> values = new HashMap<>();
 
     void define(String name, Object value) {
@@ -54,6 +56,6 @@ class Environment {
             return;
         }
 
-        throw new RuntimeError(name,"Undefined variable '" + name.lexeme + "'.");
+        throw new RuntimeError(name, "Undefined variable '" + name.lexeme + "'.");
     }
 }

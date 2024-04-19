@@ -19,24 +19,25 @@ class Scanner {
 
     static {
         keywords = new HashMap<>();
-        keywords.put("and",    AND);
-        keywords.put("class",  CLASS);
-        keywords.put("else",   ELSE);
-        keywords.put("false",  FALSE);
-        keywords.put("for",    FOR);
-        keywords.put("fun",    FUN);
-        keywords.put("if",     IF);
-        keywords.put("nil",    NIL);
-        keywords.put("or",     OR);
+        keywords.put("and", AND);
+        keywords.put("class", CLASS);
+        keywords.put("else", ELSE);
+        keywords.put("false", FALSE);
+        keywords.put("for", FOR);
+        keywords.put("fun", FUN);
+        keywords.put("if", IF);
+        keywords.put("nil", NIL);
+        keywords.put("or", OR);
         keywords.put("return", RETURN);
-        keywords.put("super",  SUPER);
-        keywords.put("this",   THIS);
-        keywords.put("true",   TRUE);
-        keywords.put("var",    VAR);
-        keywords.put("while",  WHILE);
-        keywords.put("break",  BREAK);
+        keywords.put("super", SUPER);
+        keywords.put("this", THIS);
+        keywords.put("true", TRUE);
+        keywords.put("var", VAR);
+        keywords.put("while", WHILE);
+        keywords.put("break", BREAK);
         keywords.put("continue", CONTINUE);
     }
+
     Scanner(String source) {
         this.source = source;
     }
@@ -55,30 +56,75 @@ class Scanner {
     private void scanToken() {
         char c = advance();
         switch (c) {
-            case '(': addToken(LEFT_PAREN); break;
-            case ')': addToken(RIGHT_PAREN); break;
-            case '{': addToken(LEFT_BRACE); break;
-            case '}': addToken(RIGHT_BRACE); break;
-            case ',': addToken(COMMA); break;
-            case '.': addToken(DOT); break;
-            case '-': addToken(MINUS); break;
-            case '+': addToken(PLUS); break;
-            case '%': addToken(MOD); break;
-            case ';': addToken(SEMICOLON); break;
-            case '*': addToken(STAR); break;
-            case '!': addToken(match('=') ? BANG_EQUAL : BANG);break;
-            case '=': addToken(match('=') ? EQUAL_EQUAL : EQUAL);break;
-            case '<': addToken(match('=') ? LESS_EQUAL : LESS);break;
-            case '>': addToken(match('=') ? GREATER_EQUAL : GREATER);break;
-            case '/': slash(); break;//slash process , comment or division
-            case '"': string(); break;//string process
-            case '\n': line++;break;
+            case '(':
+                addToken(LEFT_PAREN);
+                break;
+            case ')':
+                addToken(RIGHT_PAREN);
+                break;
+            case '{':
+                addToken(LEFT_BRACE);
+                break;
+            case '}':
+                addToken(RIGHT_BRACE);
+                break;
+            case ',':
+                addToken(COMMA);
+                break;
+            case '.':
+                addToken(DOT);
+                break;
+            case '-':
+                addToken(MINUS);
+                break;
+            case '+':
+                addToken(PLUS);
+                break;
+            case '%':
+                addToken(MOD);
+                break;
+            case ';':
+                addToken(SEMICOLON);
+                break;
+            case '*':
+                addToken(STAR);
+                break;
+            case '!':
+                addToken(match('=') ? BANG_EQUAL : BANG);
+                break;
+            case '=':
+                addToken(match('=') ? EQUAL_EQUAL : EQUAL);
+                break;
+            case '<':
+                addToken(match('=') ? LESS_EQUAL : LESS);
+                break;
+            case '>':
+                addToken(match('=') ? GREATER_EQUAL : GREATER);
+                break;
+            case '/':
+                slash();
+                break;//slash process , comment or division
+            case '"':
+                string();
+                break;//string process
+            case '\n':
+                line++;
+                break;
             case ' ':
             case '\r':
-            case '\t': break;// Ignore whitespace.
-            default: if (isDigit(c)) {number();}//number process
-                    else if (isAlpha(c)) {identifier();}//identifier process
-                    else {Lox.error(line, "Unexpected character '"+c+"'.");}break;//error process
+            case '\t':
+                break;// Ignore whitespace.
+            default:
+                if (isDigit(c)) {
+                    number();
+                }//number process
+                else if (isAlpha(c)) {
+                    identifier();
+                }//identifier process
+                else {
+                    Lox.error(line, "Unexpected character '" + c + "'.");
+                }
+                break;//error process
         }
     }
 
@@ -134,15 +180,19 @@ class Scanner {
                     Lox.error(line, "Unterminated comment.");
                     return;
                 }
+                char nextChar = advance();
 
-                if (advance() == '*' && peek() == '/') {
-                    //The comment end ‘/’
+                if (nextChar == '\n')
+                    line++;
+
+                if (nextChar == '*' && peek() == '/') {
                     advance();
                     break;
                 }
             }
         } else {
-            addToken(SLASH);}
+            addToken(SLASH);
+        }
     }
 
     private boolean match(char expected) {
